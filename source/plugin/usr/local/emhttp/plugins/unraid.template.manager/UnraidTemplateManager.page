@@ -1,8 +1,10 @@
 Menu="Docker:85"
+Name="UnraidTemplateManager"
+Type="xmenu"
 Title="Template Manager"
 Tag="docker"
 ---
-<?php
+<?
 
 $docroot = $docroot ?? $_SERVER['DOCUMENT_ROOT'] ?: '/usr/local/emhttp';
 try {
