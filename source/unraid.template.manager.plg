@@ -46,8 +46,13 @@ mkdir -p /boot/config/plugins/&name;
 <FILE Run="/bin/bash">
 <INLINE>
 mkdir -p /boot/config/plugins/&name;
-tar -xf /boot/config/plugins/&name;/&name;-&version;.tgz -C /usr/local/emhttp/plugins 2>/dev/null
+# Package archive is rooted at /usr, so extract at filesystem root.
+tar -xzf /boot/config/plugins/&name;/&name;-&version;.tgz -C / 2>/dev/null
 chmod -R 755 /usr/local/emhttp/plugins/&name; 2>/dev/null
+if [ ! -f /usr/local/emhttp/plugins/&name;/UnraidTemplateManager.page ]; then
+  echo "Installation error: /usr/local/emhttp/plugins/&name;/UnraidTemplateManager.page missing after extraction"
+  exit 1
+fi
 echo ""
 echo "-----------------------------------------------------------"
 echo " &name; has been installed."

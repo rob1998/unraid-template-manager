@@ -132,6 +132,12 @@
 - Replaced PHP 8-only `str_contains` / `str_ends_with` usages with compatibility-safe `strpos` / `substr` checks.
 - Practical implication: on older PHP runtimes the plugin now fails visibly instead of rendering a blank page.
 
+### D-019 - Package extraction target must match archive root
+
+- Plugin package archive is rooted at `usr/...`, so post-install extraction must target `/`, not `/usr/local/emhttp/plugins`.
+- Updated `.plg` post-install script to `tar -xzf ... -C /` and verify `UnraidTemplateManager.page` exists after extraction.
+- Practical implication: prevents silent nested-path installs that lead to blank plugin pages.
+
 ## Sources Consulted
 
 - https://github.com/Qballjos/docker-template-manager

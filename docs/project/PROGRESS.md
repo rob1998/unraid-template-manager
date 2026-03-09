@@ -68,6 +68,9 @@
 - Added runtime resilience fixes for blank-page debugging:
   - on-page throwable rendering in `UnraidTemplateManager.page`
   - PHP-compatibility replacements for `str_contains`/`str_ends_with`
+- Fixed installer extraction path:
+  - `.tgz` now extracts to `/` (archive root) instead of `/usr/local/emhttp/plugins`
+  - post-install now verifies `UnraidTemplateManager.page` exists
 - Added session continuation helper script for low-token handoff (`scripts/resume-context.sh`)
 
 ### In Progress
