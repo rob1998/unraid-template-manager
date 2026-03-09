@@ -90,7 +90,7 @@ final class TemplateDiagnosticsService
         $templatesByFile = [];
         foreach ($issues as $issue) {
             $target = (string) ($issue['target'] ?? '');
-            if ($target === '' || !str_ends_with(strtolower($target), '.xml')) {
+            if ($target === '' || substr(strtolower($target), -4) !== '.xml') {
                 continue;
             }
             $templatesByFile[$target][] = $issue;
@@ -162,4 +162,3 @@ final class TemplateDiagnosticsService
         ];
     }
 }
-
