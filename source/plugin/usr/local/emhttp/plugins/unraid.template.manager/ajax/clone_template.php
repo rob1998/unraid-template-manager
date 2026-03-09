@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 $sourceFilename = (string) ($_POST['source_filename'] ?? '');
 $targetFilename = (string) ($_POST['target_filename'] ?? '');
-if ($targetFilename !== '' && !str_ends_with(strtolower($targetFilename), '.xml')) {
+if ($targetFilename !== '' && substr(strtolower($targetFilename), -4) !== '.xml') {
     $targetFilename .= '.xml';
 }
 
@@ -44,4 +44,3 @@ try {
         'error' => $exception->getMessage(),
     ]);
 }
-

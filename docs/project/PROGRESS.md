@@ -65,6 +65,9 @@
   - plugin page renamed to `UnraidTemplateManager.page`
   - `.plg` renamed to `source/unraid.template.manager.plg`
   - GitHub raw URL set to `rob1998/unraid-template-manager`
+- Added runtime resilience fixes for blank-page debugging:
+  - on-page throwable rendering in `UnraidTemplateManager.page`
+  - PHP-compatibility replacements for `str_contains`/`str_ends_with`
 - Added session continuation helper script for low-token handoff (`scripts/resume-context.sh`)
 
 ### In Progress

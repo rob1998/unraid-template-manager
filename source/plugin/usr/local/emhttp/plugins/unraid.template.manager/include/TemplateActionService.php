@@ -86,7 +86,7 @@ final class TemplateActionService
         if (!preg_match('/^[A-Za-z0-9._-]+\.xml$/', $filename)) {
             return false;
         }
-        if (str_contains($filename, '..') || str_contains($filename, '/')) {
+        if (strpos($filename, '..') !== false || strpos($filename, '/') !== false) {
             return false;
         }
         return true;

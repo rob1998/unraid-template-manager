@@ -77,7 +77,7 @@ final class StorageModeService
         if ($path === '') {
             return 'unknown';
         }
-        if (str_ends_with(strtolower($path), '.img')) {
+        if (substr(strtolower($path), -4) === '.img') {
             return 'vdisk';
         }
         return 'directory';
@@ -105,4 +105,3 @@ final class StorageModeService
         return 'Open Unraid Docker settings to confirm current Docker data-root path.';
     }
 }
-

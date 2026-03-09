@@ -126,6 +126,12 @@
 - Script computes MD5 and updates `.plg` md5 entity automatically.
 - Practical implication: repeatable package generation without manual checksum edits.
 
+### D-018 - Blank plugin pages need explicit runtime error rendering
+
+- Added `try/catch (\Throwable)` to `UnraidTemplateManager.page` with on-page error details and `error_log` fallback.
+- Replaced PHP 8-only `str_contains` / `str_ends_with` usages with compatibility-safe `strpos` / `substr` checks.
+- Practical implication: on older PHP runtimes the plugin now fails visibly instead of rendering a blank page.
+
 ## Sources Consulted
 
 - https://github.com/Qballjos/docker-template-manager
