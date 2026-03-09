@@ -8,7 +8,7 @@
 <!ENTITY gitURL    "https://raw.githubusercontent.com/rob1998/unraid-template-manager/main/source">
 <!ENTITY pluginURL "&gitURL;/unraid.template.manager.plg">
 <!ENTITY support   "https://forums.unraid.net/">
-<!ENTITY md5       "336c54f4b6f26f3addecc77fd398c0f7">
+<!ENTITY md5       "c82936a6bf08381f252405e4e963ef87">
 ]>
 
 <PLUGIN name="&name;"
