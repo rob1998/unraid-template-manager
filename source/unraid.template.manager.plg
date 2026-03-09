@@ -2,13 +2,13 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "unraid.template.manager">
 <!ENTITY author    "Unraid Template Manager Maintainers">
-<!ENTITY version   "0.1.0">
+<!ENTITY version   "0.1.1">
 <!ENTITY launch    "UnraidTemplateManager">
 <!ENTITY pluginDir "/usr/local/emhttp/plugins/&name;">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/rob1998/unraid-template-manager/main/source">
 <!ENTITY pluginURL "&gitURL;/unraid.template.manager.plg">
 <!ENTITY support   "https://forums.unraid.net/">
-<!ENTITY md5       "d94126893e8db94aaafb1fe5a9c50a66">
+<!ENTITY md5       "336c54f4b6f26f3addecc77fd398c0f7">
 ]>
 
 <PLUGIN name="&name;"
@@ -21,6 +21,11 @@
         icon="docker">
 
 <CHANGES>
+###0.1.1
+- Fix page registration metadata for Unraid rendering
+- Improve runtime compatibility and error visibility
+- Fix package extraction target and install verification
+
 ###0.1.0
 - Initial native plugin skeleton
 - Base page registration and config path initialization
