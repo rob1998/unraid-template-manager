@@ -1,0 +1,138 @@
+.dtm-wrap {
+  padding: 12px 0;
+}
+
+.dtm-header h2 {
+  margin: 0 0 2px 0;
+}
+
+.dtm-subtitle {
+  margin: 0 0 12px 0;
+  opacity: 0.8;
+}
+
+.dtm-cards {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.dtm-card {
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  border-radius: 6px;
+  min-width: 140px;
+  padding: 8px 10px;
+}
+
+.dtm-card .label {
+  display: block;
+  font-size: 12px;
+  opacity: 0.75;
+}
+
+.dtm-path {
+  margin: 8px 0 12px 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(127, 127, 127, 0.35);
+}
+
+.dtm-path.ok {
+  border-color: rgba(60, 170, 70, 0.45);
+}
+
+.dtm-path.warn {
+  border-color: rgba(210, 140, 20, 0.6);
+}
+
+.dtm-toolbar {
+  margin-bottom: 10px;
+}
+
+#dtm-search {
+  min-width: 360px;
+  max-width: 100%;
+}
+
+.dtm-table {
+  width: 100%;
+}
+
+.dtm-table td,
+.dtm-table th {
+  vertical-align: top;
+}
+
+.status {
+  display: inline-block;
+  min-width: 68px;
+  text-align: center;
+  border-radius: 999px;
+  padding: 1px 8px;
+  font-size: 11px;
+}
+
+.status-valid {
+  background: rgba(60, 170, 70, 0.15);
+  color: #2e9b42;
+}
+
+.status-invalid {
+  background: rgba(190, 58, 58, 0.15);
+  color: #c43b3b;
+}
+
+.status-matched {
+  background: rgba(50, 110, 210, 0.15);
+  color: #2f69d0;
+}
+
+.status-orphaned {
+  background: rgba(210, 140, 20, 0.18);
+  color: #b87412;
+}
+
+.status-unknown {
+  background: rgba(127, 127, 127, 0.2);
+  color: #777;
+}
+
+.empty {
+  text-align: center;
+  opacity: 0.75;
+}
+
+.dtm-unmatched-title {
+  margin: 14px 0 8px 0;
+  font-weight: 600;
+}
+
+.dtm-delete-template {
+  border: 1px solid rgba(190, 58, 58, 0.45);
+  background: rgba(190, 58, 58, 0.08);
+  color: #b72f2f;
+  border-radius: 5px;
+  padding: 3px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.dtm-delete-template:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.dtm-clone-template {
+  border: 1px solid rgba(50, 110, 210, 0.45);
+  background: rgba(50, 110, 210, 0.08);
+  color: #2f69d0;
+  border-radius: 5px;
+  padding: 3px 8px;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.dtm-clone-template:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
