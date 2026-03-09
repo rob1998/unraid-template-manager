@@ -1,0 +1,68 @@
+<?xml version='1.0' standalone='yes'?>
+<!DOCTYPE PLUGIN [
+<!ENTITY name      "unraid.template.manager">
+<!ENTITY author    "Unraid Template Manager Maintainers">
+<!ENTITY version   "0.1.0">
+<!ENTITY launch    "UnraidTemplateManager">
+<!ENTITY pluginDir "/usr/local/emhttp/plugins/&name;">
+<!ENTITY gitURL    "https://raw.githubusercontent.com/rob1998/unraid-template-manager/main/source">
+<!ENTITY pluginURL "&gitURL;/unraid.template.manager.plg">
+<!ENTITY support   "https://forums.unraid.net/">
+<!ENTITY md5       "7b50a5bb7a69b2677d7d3c6b4576cd6e">
+]>
+
+<PLUGIN name="&name;"
+        author="&author;"
+        version="&version;"
+        launch="&launch;"
+        pluginURL="&pluginURL;"
+        support="&support;"
+        min="6.12.0"
+        icon="docker">
+
+<CHANGES>
+###0.1.0
+- Initial native plugin skeleton
+- Base page registration and config path initialization
+- Read-only template inventory scaffold
+</CHANGES>
+
+<!-- Pre-install -->
+<FILE Run="/bin/bash">
+<INLINE>
+rm -rf /usr/local/emhttp/plugins/&name;/* 2>/dev/null
+rm -f $(ls /boot/config/plugins/&name;/*.tgz 2>/dev/null | grep -v '&version;')
+mkdir -p /boot/config/plugins/&name;
+</INLINE>
+</FILE>
+
+<!-- Package artifact (MD5 auto-updated by scripts/build-package.sh; set gitURL before release) -->
+<FILE Name="/boot/config/plugins/&name;/&name;-&version;.tgz">
+<URL>&gitURL;/packages/&name;-&version;.tgz</URL>
+<MD5>&md5;</MD5>
+</FILE>
+
+<!-- Post-install -->
+<FILE Run="/bin/bash">
+<INLINE>
+mkdir -p /boot/config/plugins/&name;
+tar -xf /boot/config/plugins/&name;/&name;-&version;.tgz -C /usr/local/emhttp/plugins 2>/dev/null
+chmod -R 755 /usr/local/emhttp/plugins/&name; 2>/dev/null
+echo ""
+echo "-----------------------------------------------------------"
+echo " &name; has been installed."
+echo " Version: &version;"
+echo "-----------------------------------------------------------"
+echo ""
+</INLINE>
+</FILE>
+
+<!-- Remove -->
+<FILE Run="/bin/bash" Method="remove">
+<INLINE>
+rm -rf /usr/local/emhttp/plugins/&name; 2>/dev/null
+rm -rf /boot/config/plugins/&name; 2>/dev/null
+</INLINE>
+</FILE>
+
+</PLUGIN>

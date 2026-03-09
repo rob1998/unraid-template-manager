@@ -1,0 +1,23 @@
+Menu="Docker:85"
+Title="Template Manager"
+Tag="docker"
+---
+<?php
+
+$docroot = $docroot ?? $_SERVER['DOCUMENT_ROOT'] ?: '/usr/local/emhttp';
+require_once $docroot . '/plugins/unraid.template.manager/include/PluginPaths.php';
+require_once $docroot . '/plugins/unraid.template.manager/include/TemplateInventoryService.php';
+require_once $docroot . '/plugins/unraid.template.manager/include/ContainerInventoryService.php';
+require_once $docroot . '/plugins/unraid.template.manager/include/TemplateMatcher.php';
+require_once $docroot . '/plugins/unraid.template.manager/include/TemplateDiagnosticsService.php';
+require_once $docroot . '/plugins/unraid.template.manager/include/StorageModeService.php';
+require_once $docroot . '/plugins/unraid.template.manager/include/PageRenderer.php';
+
+\UnraidTemplateManager\PluginPaths::ensureConfigDirectory();
+$service = new \UnraidTemplateManager\TemplateInventoryService(\UnraidTemplateManager\PluginPaths::TEMPLATES_DIR);
+$containerService = new \UnraidTemplateManager\ContainerInventoryService();
+$matcher = new \UnraidTemplateManager\TemplateMatcher();
+$diagnostics = new \UnraidTemplateManager\TemplateDiagnosticsService();
+$storageModeService = new \UnraidTemplateManager\StorageModeService();
+$renderer = new \UnraidTemplateManager\PageRenderer($service, $containerService, $matcher, $diagnostics, $storageModeService);
+echo $renderer->render();
