@@ -21,7 +21,8 @@ Build a native Unraid plugin named `unraid.template.manager` that manages the li
 - Milestone 3 (Mapping and diagnostics): `done`
 - Milestone 4 (Safe actions and backup): `done`
 - Milestone 5 (Recovery tools): `done`
-- Milestone 6 (Polish and packaging): `in_progress`
+- Milestone 6 (Polish and packaging): `done`
+- Milestone 7 (Performance and advanced lifecycle operations): `in_progress`
 
 ## Milestone Breakdown
 
@@ -64,11 +65,20 @@ Build a native Unraid plugin named `unraid.template.manager` that manages the li
 - Add recovery guidance and pre-change checks
 - Improve mismatch diagnostics (container exists/template missing)
 
-### Milestone 6 - Polish and Packaging (`in_progress`)
+### Milestone 6 - Polish and Packaging (`done`)
 
 - UX polish and error handling hardening
 - Package/release workflow and installation validation
 - Documentation completion
+
+### Milestone 7 - Performance and Advanced Lifecycle Operations (`in_progress`)
+
+- Eliminate slow page loads and harden runtime execution paths
+- Improve filtering and table ergonomics for large inventories
+- Add bulk safe-delete workflow with mandatory backup
+- Add backup-all and import/export template operations
+- Add Docker storage mode switch tooling with safety controls
+- Complete live-host validation and hardening based on runtime feedback
 
 ## High-Level Component Design
 

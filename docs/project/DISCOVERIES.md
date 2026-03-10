@@ -138,6 +138,99 @@
 - Updated `.plg` post-install script to `tar -xzf ... -C /` and verify `UnraidTemplateManager.page` exists after extraction.
 - Practical implication: prevents silent nested-path installs that lead to blank plugin pages.
 
+### D-020 - Dynamic `.page` HTML replacement does not execute injected scripts automatically
+
+- Replacing `.outerHTML` with fetched renderer output can leave `<script src=...>` tags inert in Unraid WebGUI context.
+- Added explicit script extraction/reinjection in `UnraidTemplateManager.page`.
+- Practical implication: frontend behaviors (filters/actions) now initialize reliably after async page load.
+
+### D-021 - Docker CLI calls need bounded runtime in the render path
+
+- `docker ps -a` in page render flow can block UI load for long periods when Docker is slow/unavailable.
+- Added command timeout (2.5s) and cache fallback for container inventory.
+- Practical implication: page load latency is capped and stale container data can still be shown safely.
+
+### D-022 - Bulk lifecycle operations require checkbox-driven UX and shared backend primitives
+
+- Added row selection, select-all, and bulk delete endpoint backed by `TemplateActionService::deleteTemplates()`.
+- Backup-before-delete remains mandatory for both single and bulk operations.
+- Practical implication: large cleanup workflows are now practical without weakening safety guarantees.
+
+### D-023 - Import/export workflow is viable with archive staging and XML validation
+
+- Added template export (all/selected) to `.tgz` and import support for `.xml`, `.tgz`, `.tar.gz`, `.tar`.
+- Imports validate XML before writing and backup overwrite targets when overwrite mode is enabled.
+- Practical implication: templates can be migrated between hosts with safety-first behavior.
+
+### D-024 - Restore endpoints were present but needed first-class UI wiring
+
+- Existing list/preview/restore endpoints are now exposed via UI controls.
+- Practical implication: backup recovery is now accessible directly from the plugin page instead of endpoint-only workflows.
+
+### D-025 - Storage mode switch can be implemented as docker.cfg mutation with config backup
+
+- Added `StorageModeService::switchMode()` to update `docker.cfg`, normalize `DOCKER_OPTS`, and create backup.
+- Optional Docker restart support was added to apply changes immediately.
+- Practical implication: mode switching is now possible in-plugin, with explicit safety prompts and backup trail.
+
+### D-026 - Some Unraid PHP runtimes cannot use `proc_open` for command execution
+
+- Initial timeout implementation relied on `proc_open`, which can be disabled by runtime policy.
+- Added `exec`-based fallback with optional `/usr/bin/timeout` wrapping.
+- Practical implication: container inventory mapping works across more Unraid runtime configurations while keeping timeout protection where possible.
+
+### D-027 - Prefer `timeout + exec` over `proc_open` for Docker inventory on Unraid hosts
+
+- Runtime behavior showed `proc_open` path timing out while direct shell `timeout 3 docker ps -a ...` returned quickly.
+- Updated command strategy to prefer timeout-binary execution first, then fallback to `proc_open` or plain `exec`.
+- Practical implication: inventory collection better matches observed host behavior and restores mapping reliability.
+
+### D-028 - Full Docker row formatting can timeout while names-only still succeeds
+
+- On host validation, full inventory command timed out around 3s in PHP context.
+- Added names-only fallback (`docker ps -a --format '{{.Names}}'`) when primary inventory times out.
+- Practical implication: mapping can still work even when full container metadata is slow to fetch.
+
+### D-029 - Delete workflows need a visible, itemized confirmation step
+
+- Replaced `window.confirm` delete prompts with a native modal.
+- Modal now lists the exact template filename(s) being deleted in a vertical list.
+- Practical implication: operators can verify targets before destructive actions, reducing accidental bulk deletions.
+
+### D-030 - Splitting dense controls into tabs improves operational clarity
+
+- Introduced tabbed sections for Templates, Settings, and Tools.
+- Moved runtime/storage controls into Settings and backup/export/import/restore into Tools.
+- Practical implication: page is less cluttered, and high-risk actions are grouped in clearer contexts.
+
+### D-031 - Empty AJAX responses must be treated as endpoint failures, not silent no-ops
+
+- Host HAR showed delete endpoints returning HTTP 200 with empty body and default `text/html`.
+- Hardened delete/bulk-delete endpoints to:
+  - load dependencies inside guarded `try` blocks
+  - always emit JSON responses
+  - log throwable details for server-side diagnosis
+- Frontend `postJson` now fails explicitly on empty/invalid JSON responses.
+- Practical implication: delete failures are now visible and diagnosable instead of appearing as no-op clicks.
+
+### D-032 - Unraid webGUI requires `csrf_token` on protected POST endpoints
+
+- Syslog confirmed delete and bulk-delete were blocked before endpoint execution due to missing `csrf_token`.
+- Added CSRF token propagation in frontend POST requests (including multipart import flow).
+- Practical implication: write actions now satisfy Unraid webGUI CSRF enforcement and execute normally.
+
+### D-033 - Operators need export convenience at row level and backup download for recovery workflows
+
+- Added per-template Export action directly in table row actions.
+- Added `download_backup.php` endpoint and Tools-tab download button for selected backup set.
+- Practical implication: faster single-template portability and direct retrieval of historical backup sets.
+
+### D-034 - High-risk storage mode changes need stronger UX safeguards
+
+- Added an explicit warning in the Settings-tab storage switch form that mode switching is not fully validated in production.
+- Replaced browser-native confirm with the plugin confirmation modal for storage switching, with itemized mode/path/restart details and backup note.
+- Practical implication: operators get clearer risk context and a more auditable confirmation step before modifying `docker.cfg`.
+
 ## Sources Consulted
 
 - https://github.com/Qballjos/docker-template-manager

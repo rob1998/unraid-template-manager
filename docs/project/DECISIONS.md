@@ -128,3 +128,33 @@
 - Consequences:
   - Lower release error rate and repeatable packaging.
   - Requires maintainers to use script workflow for packaging.
+
+## ADR-010 - Cap Docker inventory runtime and allow cached fallback
+
+- Date: 2026-03-09
+- Context:
+  - User-observed page load latency reached ~21 seconds.
+  - Render path depended on synchronous `docker ps -a`.
+- Decision:
+  - Add command timeout for Docker inventory collection and fallback to cached last-known-good container list.
+- Alternatives considered:
+  - Remove container mapping from initial render.
+  - Keep synchronous live query and accept long page stalls.
+- Consequences:
+  - Page load remains responsive even when Docker is degraded.
+  - Mapping data may be stale briefly when cache fallback is used.
+
+## ADR-011 - Implement storage mode switching through guarded docker.cfg updates
+
+- Date: 2026-03-09
+- Context:
+  - Project requires native storage mode switch capability similar to reference workflows.
+  - Direct daemon-level migration orchestration is high risk for initial implementation.
+- Decision:
+  - Implement storage mode switch by backing up and updating `/boot/config/docker.cfg` with path/mode normalization and optional Docker restart.
+- Alternatives considered:
+  - Expose guidance only with no switch action.
+  - Attempt full migration orchestration of Docker data-root contents in-plugin.
+- Consequences:
+  - Provides practical in-plugin mode switching while keeping implementation bounded.
+  - Operators still need to understand mode implications and validate resulting Docker state.

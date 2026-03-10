@@ -9,9 +9,36 @@ Tag="docker"
 (function() {
   var target = document.getElementById('utm-root');
   if (!target) return;
+
+  function replaceAndExecute(container, html) {
+    var wrapper = document.createElement('div');
+    wrapper.innerHTML = html;
+    var scripts = wrapper.querySelectorAll('script');
+    scripts.forEach(function(script) {
+      script.parentNode.removeChild(script);
+    });
+
+    container.outerHTML = wrapper.innerHTML;
+
+    scripts.forEach(function(script) {
+      var newScript = document.createElement('script');
+      if (script.src) {
+        newScript.src = script.src;
+      } else {
+        newScript.text = script.textContent;
+      }
+      Array.prototype.slice.call(script.attributes).forEach(function(attr) {
+        if (attr.name !== 'src') {
+          newScript.setAttribute(attr.name, attr.value);
+        }
+      });
+      document.body.appendChild(newScript);
+    });
+  }
+
   fetch('/plugins/unraid.template.manager/UnraidTemplateManager.php', { credentials: 'same-origin' })
     .then(function(response) { return response.text(); })
-    .then(function(html) { target.outerHTML = html; })
+    .then(function(html) { replaceAndExecute(target, html); })
     .catch(function(error) {
       target.innerHTML = '<div style="padding:16px;border:1px solid #b44;border-radius:8px;background:#3a1f1f;color:#f4dcdc">Failed to load plugin content: ' +
         (error && error.message ? error.message : 'unknown error') + '</div>';

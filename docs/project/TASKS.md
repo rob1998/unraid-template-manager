@@ -45,7 +45,21 @@ Status values: `todo`, `in_progress`, `blocked`, `done`, `deferred`, `research`,
 | M5-T01 | Implement docker storage mode detection | done | `StorageModeService` + UI guidance panel |
 | M6-T01 | Packaging and release workflow | done | `scripts/build-package.sh` builds artifact + updates MD5 |
 | M6-T02 | Finalize release URL metadata in `.plg` | done | Updated to `rob1998/unraid-template-manager` |
-| M6-T03 | Perform in-Unraid installation smoke test | in_progress | Pending runtime verification on target Unraid host |
+| M6-T03 | Perform in-Unraid installation smoke test | done | Install/load verified by user; follow-up performance and UI bugs moved to Milestone 7 |
+| M7-T01 | Fix runtime performance bottlenecks and slow page load | done | Added Docker command timeout + cache fallback and loader script execution fix |
+| M7-T02 | Replace single search with multi-filter toolbar (text + select filters) | done | Added text search + template/mapping/severity dropdown filters |
+| M7-T03 | Add row checkboxes, select-all, and bulk backup+delete action | done | Added row selectors, select-all, and bulk delete endpoint |
+| M7-T04 | Restructure table to combine status columns into stacked badges | done | Statuses now stacked in one summary cell |
+| M7-T05 | Add backup-all action and UX polish for destructive actions | done | Added backup all/selected; single-row button label changed to Delete |
+| M7-T06 | Implement Docker storage mode switch workflow | done | Added switch endpoint and docker.cfg backup-first update flow |
+| M7-T07 | Add template export and import workflows | done | Added export (all/selected) and import (.xml/.tgz/.tar.gz/.tar) |
+| M7-T08 | Scan and implement additional parity gaps from reference workflows | done | Added restore workflow UI wiring (list, preview, restore apply) |
+| M7-T10 | Add explicit delete confirmation modal with itemized list | done | Single and bulk delete now use modal listing templates and backup warning |
+| M7-T11 | Reorganize UI into tabbed layout (Templates/Settings/Tools) | done | Status/settings split from tools for cleaner structure |
+| M7-T12 | Add per-template export action in templates table | done | Added row-level Export button and frontend wiring |
+| M7-T13 | Add download action for existing backup sets | done | Added backup archive download endpoint and Tools-tab button |
+| M7-T14 | Add explicit warning + modal confirmation for storage mode switch | done | Settings tab now warns untested status and uses itemized confirmation modal |
+| M7-T09 | Execute in-Unraid validation pass for Milestone 7 features | in_progress | Pending user runtime verification on target host |
 
 ## Session Follow-Up Automation Safety
 

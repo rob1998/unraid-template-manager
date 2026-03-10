@@ -1,5 +1,73 @@
 # PROGRESS.md
 
+## 2026-03-09
+
+### Session Start
+
+- User-confirmed plugin now loads on Unraid host.
+- New issues identified for Milestone 7:
+  - page load latency around 21 seconds
+  - row filter behavior not working in deployed page
+  - missing bulk actions and import/export workflows
+  - missing Docker storage mode switch operation workflow
+
+### Milestone Status
+
+- Milestone 0: completed
+- Milestone 1: completed
+- Milestone 2: completed
+- Milestone 3: completed
+- Milestone 4: completed
+- Milestone 5: completed
+- Milestone 6: completed
+- Milestone 7: in progress
+
+### In Progress
+
+- M7-T09: execute in-Unraid validation pass for Milestone 7 features
+
+### Next Tasks
+
+- Validate page load latency reduction and filter behavior on target host
+- Validate bulk delete + backup flows and export/import operations
+- Validate storage-mode switch workflow (config backup and optional restart)
+
+### Recently Completed
+
+- Added Docker inventory timeout + cache fallback to avoid long page stalls.
+- Fixed `.page` dynamic loader to execute injected scripts reliably.
+- Reworked UI:
+  - multi-filter toolbar
+  - stacked status badges
+  - row select + select-all
+  - backup all/selected
+  - export all/selected
+  - import form with overwrite option
+- Added bulk delete endpoint with backup-before-delete safety.
+- Added restore workflow UI over existing list/preview/restore endpoints.
+- Added Docker storage mode switch endpoint with docker.cfg backup.
+- Bumped plugin package to `0.2.0`.
+- Ran local smoke checks for:
+  - renderer output generation
+  - `TemplateTransferService` export/import archive flow
+  - `StorageModeService` guarded config switch flow
+- Adjusted Docker inventory execution strategy to prefer `timeout + exec` path after host feedback that `proc_open` path timed out.
+- Added names-only Docker inventory fallback when full inventory format times out, to keep template mapping available.
+- Added delete confirmation modal for single and bulk delete with explicit template list and backup-before-delete notice.
+- Reorganized interface into tabs:
+  - Templates: filters, selection, table, delete
+  - Settings: runtime status and storage mode switch
+  - Tools: backup/export/import/restore operations
+- Hardened delete and bulk-delete AJAX error handling:
+  - endpoint includes moved inside guarded execution path
+  - explicit JSON response fallback + server-side error logging
+  - frontend now surfaces empty/invalid JSON responses
+- Added automatic CSRF token injection for protected POST requests after host syslog showed `missing csrf_token` rejections.
+- Added per-row template Export button in Templates tab.
+- Added Tools-tab backup download action for selected backup set.
+- Added an explicit Settings-tab warning that storage mode switching is not fully validated in production.
+- Replaced storage mode switch `window.confirm` with native modal confirmation that lists target mode/path/restart and backup behavior.
+
 ## 2026-03-08
 
 ### Session Start

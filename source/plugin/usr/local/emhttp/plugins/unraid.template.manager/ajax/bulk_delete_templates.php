@@ -6,7 +6,7 @@ header('Content-Type: application/json; charset=utf-8');
 /**
  * @param array<string, mixed> $payload
  */
-function dtm_delete_emit_json(array $payload, int $status = 200): void
+function dtm_bulk_delete_emit_json(array $payload, int $status = 200): void
 {
     http_response_code($status);
     $json = json_encode($payload, JSON_UNESCAPED_SLASHES | JSON_INVALID_UTF8_SUBSTITUTE);
@@ -25,14 +25,15 @@ try {
     \UnraidTemplateManager\PluginPaths::ensureConfigDirectory();
 
     if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-        dtm_delete_emit_json([
+        dtm_bulk_delete_emit_json([
             'success' => false,
             'error' => 'Method not allowed',
         ], 405);
         exit;
     }
 
-    $filename = (string) ($_POST['filename'] ?? '');
+    $rawFiles = trim((string) ($_POST['files'] ?? ''));
+    $filenames = array_values(array_filter(array_map('trim', explode(',', $rawFiles))));
     $backupService = new \UnraidTemplateManager\BackupService(
         \UnraidTemplateManager\PluginPaths::TEMPLATES_DIR,
         \UnraidTemplateManager\PluginPaths::BACKUP_DIR
@@ -42,14 +43,14 @@ try {
         $backupService
     );
 
-    $result = $actionService->deleteTemplate($filename);
-    dtm_delete_emit_json([
+    $result = $actionService->deleteTemplates($filenames);
+    dtm_bulk_delete_emit_json([
         'success' => true,
         'result' => $result,
     ]);
 } catch (\Throwable $exception) {
-    error_log('unraid.template.manager delete_template.php: ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':' . $exception->getLine());
-    dtm_delete_emit_json([
+    error_log('unraid.template.manager bulk_delete_templates.php: ' . $exception->getMessage() . ' in ' . $exception->getFile() . ':' . $exception->getLine());
+    dtm_bulk_delete_emit_json([
         'success' => false,
         'error' => $exception->getMessage(),
     ], 500);
