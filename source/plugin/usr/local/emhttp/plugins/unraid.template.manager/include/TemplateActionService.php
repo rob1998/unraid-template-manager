@@ -21,23 +21,58 @@ final class TemplateActionService
      */
     public function deleteTemplate(string $filename): array
     {
-        $filename = trim($filename);
-        if (!$this->isValidTemplateFilename($filename)) {
-            throw new RuntimeException('Invalid template filename.');
+        $result = $this->deleteTemplates([$filename]);
+
+        return [
+            'deleted' => (string) (($result['deleted'][0] ?? '')),
+            'backup' => $result['backup'],
+        ];
+    }
+
+    /**
+     * @param array<int, string> $filenames
+     * @return array<string, mixed>
+     */
+    public function deleteTemplates(array $filenames): array
+    {
+        $validated = $this->sanitizeFilenameList($filenames);
+        if (count($validated) === 0) {
+            throw new RuntimeException('No valid template filenames provided.');
         }
 
-        $path = $this->safeJoin($this->templatesDir, $filename);
-        if ($path === null || !is_file($path)) {
-            throw new RuntimeException('Template file not found.');
+        $pathsByFile = [];
+        $missing = [];
+        foreach ($validated as $filename) {
+            $path = $this->safeJoin($this->templatesDir, $filename);
+            if ($path === null || !is_file($path)) {
+                $missing[] = $filename;
+                continue;
+            }
+            $pathsByFile[$filename] = $path;
         }
 
-        $backup = $this->backupService->createBackup([$filename]);
-        if (!@unlink($path)) {
-            throw new RuntimeException('Failed to delete template file.');
+        if (count($pathsByFile) === 0) {
+            throw new RuntimeException('Template files not found.');
+        }
+
+        $toDelete = array_keys($pathsByFile);
+        $backup = $this->backupService->createBackup($toDelete);
+
+        $deleted = [];
+        $failed = [];
+        foreach ($toDelete as $filename) {
+            $path = $pathsByFile[$filename];
+            if (!@unlink($path)) {
+                $failed[] = $filename;
+                continue;
+            }
+            $deleted[] = $filename;
         }
 
         return [
-            'deleted' => $filename,
+            'deleted' => $deleted,
+            'failed' => $failed,
+            'missing' => $missing,
             'backup' => $backup,
         ];
     }
@@ -106,5 +141,22 @@ final class TemplateActionService
         }
 
         return $joined;
+    }
+
+    /**
+     * @param array<int, string> $filenames
+     * @return array<int, string>
+     */
+    private function sanitizeFilenameList(array $filenames): array
+    {
+        $dedupe = [];
+        foreach ($filenames as $filename) {
+            $clean = trim((string) $filename);
+            if ($this->isValidTemplateFilename($clean)) {
+                $dedupe[$clean] = true;
+            }
+        }
+
+        return array_keys($dedupe);
     }
 }

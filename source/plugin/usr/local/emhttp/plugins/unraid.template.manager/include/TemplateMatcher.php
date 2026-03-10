@@ -10,13 +10,18 @@ final class TemplateMatcher
      * @param array<int, array<string, string>> $containers
      * @return array{templates: array<int, array<string, mixed>>, unmatched_containers: array<int, array<string, string>>}
      */
-    public function mapTemplatesToContainers(array $templates, array $containers, bool $dockerAvailable): array
+    public function mapTemplatesToContainers(
+        array $templates,
+        array $containers,
+        bool $dockerAvailable,
+        string $dockerUnavailableReason = 'Docker CLI unavailable'
+    ): array
     {
         $assignedContainerNames = [];
         $mappedTemplates = [];
 
         foreach ($templates as $template) {
-            $mapped = $this->matchTemplate($template, $containers, $dockerAvailable);
+            $mapped = $this->matchTemplate($template, $containers, $dockerAvailable, $dockerUnavailableReason);
             if (($mapped['matched'] ?? false) === true) {
                 $containerName = (string) ($mapped['matched_container'] ?? '');
                 if ($containerName !== '') {
@@ -48,7 +53,12 @@ final class TemplateMatcher
      * @param array<int, array<string, string>> $containers
      * @return array<string, mixed>
      */
-    private function matchTemplate(array $template, array $containers, bool $dockerAvailable): array
+    private function matchTemplate(
+        array $template,
+        array $containers,
+        bool $dockerAvailable,
+        string $dockerUnavailableReason
+    ): array
     {
         $templateName = (string) ($template['name'] ?? '');
         $templateImage = strtolower((string) ($template['image'] ?? ''));
@@ -68,7 +78,7 @@ final class TemplateMatcher
 
         if (!$dockerAvailable) {
             $result['mapping_status'] = 'unknown';
-            $result['match_reason'] = 'Docker CLI unavailable';
+            $result['match_reason'] = $dockerUnavailableReason !== '' ? $dockerUnavailableReason : 'Docker CLI unavailable';
             return $result;
         }
 
@@ -137,4 +147,3 @@ final class TemplateMatcher
         return $template;
     }
 }
-

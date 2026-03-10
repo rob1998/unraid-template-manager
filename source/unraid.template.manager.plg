@@ -2,13 +2,13 @@
 <!DOCTYPE PLUGIN [
 <!ENTITY name      "unraid.template.manager">
 <!ENTITY author    "Unraid Template Manager Maintainers">
-<!ENTITY version   "0.1.1">
+<!ENTITY version   "0.2.0">
 <!ENTITY launch    "UnraidTemplateManager">
 <!ENTITY pluginDir "/usr/local/emhttp/plugins/&name;">
 <!ENTITY gitURL    "https://raw.githubusercontent.com/rob1998/unraid-template-manager/main/source">
 <!ENTITY pluginURL "&gitURL;/unraid.template.manager.plg">
 <!ENTITY support   "https://forums.unraid.net/">
-<!ENTITY md5       "c82936a6bf08381f252405e4e963ef87">
+<!ENTITY md5       "de9d4712ed9f31ad3c6d765e9856f451">
 ]>
 
 <PLUGIN name="&name;"
@@ -21,6 +21,15 @@
         icon="docker">
 
 <CHANGES>
+###0.2.0
+- Reduce load stalls by adding Docker command timeout and cache fallback
+- Fix dynamic loader script execution so filters and actions initialize reliably
+- Add multi-filter toolbar and stacked status badges
+- Add row selection, select-all, and bulk backup-safe delete flow
+- Add backup all/selected, export all/selected, and import workflows
+- Add restore workflow controls (list, preview, restore)
+- Add Docker storage mode switch operation with docker.cfg backup
+
 ###0.1.1
 - Fix page registration metadata for Unraid rendering
 - Improve runtime compatibility and error visibility

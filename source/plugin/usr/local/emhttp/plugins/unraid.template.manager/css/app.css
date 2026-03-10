@@ -8,11 +8,12 @@
 
 .dtm-subtitle {
   margin: 0 0 12px 0;
-  opacity: 0.8;
+  opacity: 0.85;
 }
 
 .dtm-cards {
   display: flex;
+  flex-wrap: wrap;
   gap: 10px;
   margin-bottom: 10px;
 }
@@ -20,7 +21,7 @@
 .dtm-card {
   border: 1px solid rgba(127, 127, 127, 0.35);
   border-radius: 6px;
-  min-width: 140px;
+  min-width: 130px;
   padding: 8px 10px;
 }
 
@@ -30,8 +31,78 @@
   opacity: 0.75;
 }
 
+.dtm-feedback {
+  min-height: 18px;
+  margin: 0 0 10px 0;
+  font-size: 12px;
+}
+
+.dtm-feedback-success {
+  color: #2e9b42;
+}
+
+.dtm-feedback-warning {
+  color: #b87412;
+}
+
+.dtm-feedback-error {
+  color: #c43b3b;
+}
+
+.dtm-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+  border-bottom: 1px solid rgba(127, 127, 127, 0.3);
+  padding-bottom: 8px;
+}
+
+.dtm-tab-button {
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  background: rgba(127, 127, 127, 0.08);
+  color: inherit;
+  border-radius: 5px;
+  padding: 5px 12px;
+  cursor: pointer;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.dtm-tab-button.is-active {
+  border-color: rgba(50, 110, 210, 0.45);
+  background: rgba(50, 110, 210, 0.14);
+  color: #7fa7ef;
+}
+
+.dtm-tab-panel {
+  display: none;
+}
+
+.dtm-tab-panel.is-active {
+  display: block;
+}
+
+.dtm-panel-card {
+  margin-bottom: 10px;
+  padding: 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(127, 127, 127, 0.35);
+}
+
+.dtm-panel-card h3 {
+  margin: 0 0 8px 0;
+  font-size: 14px;
+}
+
+.dtm-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 10px;
+}
+
 .dtm-path {
-  margin: 8px 0 12px 0;
+  margin: 8px 0;
   padding: 8px 10px;
   border-radius: 6px;
   border: 1px solid rgba(127, 127, 127, 0.35);
@@ -45,13 +116,110 @@
   border-color: rgba(210, 140, 20, 0.6);
 }
 
+.dtm-runtime-meta {
+  margin-left: 6px;
+  opacity: 0.8;
+}
+
+.dtm-storage-form {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin: 8px 0 12px 0;
+  padding: 8px 10px;
+  border-radius: 6px;
+  border: 1px solid rgba(127, 127, 127, 0.35);
+}
+
+.dtm-storage-form label {
+  font-size: 12px;
+  opacity: 0.9;
+}
+
+.dtm-storage-form select,
+.dtm-storage-form input[type='text'] {
+  min-width: 180px;
+}
+
+.dtm-storage-warning {
+  width: 100%;
+  margin-top: 2px;
+  font-size: 12px;
+  line-height: 1.35;
+  color: #d39a42;
+}
+
 .dtm-toolbar {
   margin-bottom: 10px;
 }
 
+.dtm-filter-row,
+.dtm-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
 #dtm-search {
-  min-width: 360px;
+  min-width: 320px;
   max-width: 100%;
+}
+
+.dtm-selected-count {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.dtm-checkbox-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+}
+
+.dtm-button {
+  border: 1px solid rgba(127, 127, 127, 0.35);
+  background: rgba(127, 127, 127, 0.08);
+  color: inherit;
+  border-radius: 5px;
+  padding: 4px 10px;
+  cursor: pointer;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.dtm-button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.dtm-button-primary {
+  border-color: rgba(50, 110, 210, 0.45);
+  background: rgba(50, 110, 210, 0.08);
+  color: #7fa7ef;
+}
+
+.dtm-button-danger {
+  border-color: rgba(190, 58, 58, 0.45);
+  background: rgba(190, 58, 58, 0.08);
+  color: #e07a7a;
+}
+
+.dtm-button-warning {
+  border-color: rgba(210, 140, 20, 0.6);
+  background: rgba(210, 140, 20, 0.12);
+  color: #d39a42;
+}
+
+.dtm-import-form {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
 }
 
 .dtm-table {
@@ -63,6 +231,11 @@
   vertical-align: top;
 }
 
+.dtm-template-name {
+  font-weight: 600;
+  margin-bottom: 3px;
+}
+
 .status {
   display: inline-block;
   min-width: 68px;
@@ -70,6 +243,12 @@
   border-radius: 999px;
   padding: 1px 8px;
   font-size: 11px;
+}
+
+.status-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
 }
 
 .status-valid {
@@ -84,7 +263,7 @@
 
 .status-matched {
   background: rgba(50, 110, 210, 0.15);
-  color: #2f69d0;
+  color: #7fa7ef;
 }
 
 .status-orphaned {
@@ -94,7 +273,13 @@
 
 .status-unknown {
   background: rgba(127, 127, 127, 0.2);
-  color: #777;
+  color: #999;
+}
+
+.dtm-reason {
+  margin-top: 4px;
+  font-size: 11px;
+  opacity: 0.8;
 }
 
 .empty {
@@ -107,32 +292,84 @@
   font-weight: 600;
 }
 
-.dtm-delete-template {
-  border: 1px solid rgba(190, 58, 58, 0.45);
-  background: rgba(190, 58, 58, 0.08);
-  color: #b72f2f;
-  border-radius: 5px;
-  padding: 3px 8px;
-  cursor: pointer;
+.dtm-modal.hidden {
+  display: none;
+}
+
+.dtm-modal {
+  position: fixed;
+  inset: 0;
+  z-index: 5000;
+}
+
+.dtm-modal-backdrop {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+}
+
+.dtm-modal-dialog {
+  position: relative;
+  width: min(560px, calc(100vw - 24px));
+  margin: 10vh auto;
+  background: #1a1c20;
+  border: 1px solid rgba(127, 127, 127, 0.4);
+  border-radius: 8px;
+  padding: 14px;
+}
+
+.dtm-modal-dialog h3 {
+  margin: 0 0 8px 0;
+}
+
+.dtm-modal-message {
+  margin: 0 0 8px 0;
+}
+
+.dtm-modal-items {
+  margin: 0 0 10px 0;
+  padding: 8px 10px;
+  border: 1px solid rgba(127, 127, 127, 0.3);
+  border-radius: 6px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.dtm-modal-items li {
+  margin: 0;
+  line-height: 1.5;
+  font-family: monospace;
+}
+
+.dtm-modal-note {
+  margin: 0 0 10px 0;
   font-size: 12px;
+  color: #d39a42;
 }
 
-.dtm-delete-template:disabled {
-  opacity: 0.6;
-  cursor: default;
+.dtm-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
 }
 
-.dtm-clone-template {
-  border: 1px solid rgba(50, 110, 210, 0.45);
-  background: rgba(50, 110, 210, 0.08);
-  color: #2f69d0;
-  border-radius: 5px;
-  padding: 3px 8px;
-  cursor: pointer;
-  font-size: 12px;
-}
+@media (max-width: 900px) {
+  .dtm-filter-row,
+  .dtm-action-row,
+  .dtm-storage-form,
+  .dtm-import-form {
+    flex-direction: column;
+    align-items: stretch;
+  }
 
-.dtm-clone-template:disabled {
-  opacity: 0.6;
-  cursor: default;
+  #dtm-search,
+  .dtm-storage-form select,
+  .dtm-storage-form input[type='text'] {
+    min-width: 0;
+    width: 100%;
+  }
+
+  .dtm-tabs {
+    flex-direction: column;
+  }
 }

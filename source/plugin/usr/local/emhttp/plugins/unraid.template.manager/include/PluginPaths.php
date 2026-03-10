@@ -8,6 +8,8 @@ final class PluginPaths
     public const PLUGIN_NAME = 'unraid.template.manager';
     public const CONFIG_DIR = '/boot/config/plugins/' . self::PLUGIN_NAME;
     public const BACKUP_DIR = self::CONFIG_DIR . '/backups';
+    public const CACHE_DIR = self::CONFIG_DIR . '/cache';
+    public const EXPORT_DIR = self::CONFIG_DIR . '/exports';
     public const TEMPLATES_DIR = '/boot/config/plugins/dockerMan/templates-user';
 
     public static function ensureConfigDirectory(): void
@@ -19,6 +21,13 @@ final class PluginPaths
         if (!is_dir(self::BACKUP_DIR)) {
             @mkdir(self::BACKUP_DIR, 0775, true);
         }
+
+        if (!is_dir(self::CACHE_DIR)) {
+            @mkdir(self::CACHE_DIR, 0775, true);
+        }
+
+        if (!is_dir(self::EXPORT_DIR)) {
+            @mkdir(self::EXPORT_DIR, 0775, true);
+        }
     }
 }
-
