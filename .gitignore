@@ -1,0 +1,17 @@
+# Local files
+.DS_Store
+.env
+.env.*
+
+# Private agent context and planning
+/AGENTS.md
+/PROJECT_CONTEXT.md
+/REPO_BOOTSTRAP.md
+/codex-autonomous-unraid-plugin-prompt.md
+/unraid_native_plugin_codex_technical_spec.md
+/unraid_native_plugin_project_plan.md
+/docs/project/
+/scripts/resume-context.sh
+/.context/
+/.claude/
+/.codex/

@@ -22,7 +22,7 @@ fi
 mkdir -p "$PACKAGE_DIR"
 PACKAGE_FILE="$PACKAGE_DIR/${NAME}-${VERSION}.tgz"
 
-tar -czf "$PACKAGE_FILE" -C "$PLUGIN_SOURCE_DIR" usr
+COPYFILE_DISABLE=1 tar --exclude='.DS_Store' --exclude='._*' -czf "$PACKAGE_FILE" -C "$PLUGIN_SOURCE_DIR" usr
 
 if command -v md5sum >/dev/null 2>&1; then
   PACKAGE_MD5="$(md5sum "$PACKAGE_FILE" | awk '{print $1}')"
